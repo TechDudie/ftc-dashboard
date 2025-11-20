@@ -16,6 +16,35 @@ Check out our [online documentation](https://acmerobotics.github.io/ftc-dashboar
 | :--------------------------------------: | :--------------------------------------: |
 | ![](docs/images/readme-screenshot-2.jpg) | ![](docs/images/readme-screenshot-1.jpg) |
 
+# Python API
+
+A Python client library is available for interacting with FTC Dashboard via WebSocket. This allows you to read telemetry and write configuration variables from any Python application.
+
+**Quick Example:**
+```python
+import asyncio
+from ftc_dashboard_client import DashboardClient
+
+async def main():
+    async with DashboardClient() as client:
+        # Read configuration
+        config = await client.get_config()
+        
+        # Update configuration
+        await client.save_config({
+            "Test": {"LATERAL_MULTIPLIER": 1.5}
+        })
+        
+        # Read telemetry
+        telemetry = await client.get_telemetry()
+        for packet in telemetry:
+            print(packet.data)
+
+asyncio.run(main())
+```
+
+For full documentation, installation instructions, and examples, see [python-api/README.md](python-api/README.md).
+
 # Installation
 
 ## Basic
